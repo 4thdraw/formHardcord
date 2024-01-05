@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .inputdiv.fc {
+            border: 1px solid black
+        }
+
+        .inputdiv.fc label {
+            color: red
+        }
+
+        .inputdiv span {
+            display: none;
+        }
+
+        .inputdiv.fc span {
+            display: block;
+        }
+
+        [name='memberfm'] input {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <form action="http://www.naver.com" name="memberfm" onsubmit="return onsubmits()">
+        <div class="inputdiv">
+            <input type="text" name="nm" id="nm" value="">
+            <label for="nm">성명</label>
+            <span>한글로만 출력해주세요</span>
+        </div>
+        <div class="inputdiv">
+            <input type="text" name="nm2" id="nm2" value="">
+            <label for="nm2">과목</label>
+            <span>한글로만 출력해주세요</span>
+        </div>
+        <div class="inputdiv">
+            <input type="text" name="nm3" id="nm3" value="">
+            <label for="nm3">번호</label>
+            <span>한글로만 출력해주세요</span>
+        </div>
+        <button type="submit">전송</button>
+    </form>
+    <script>
+
+        const myformArr = Array.from(memberfm.elements);
+        //노드리스트를 array화
+        const myformNmArr = myformArr.filter((inputs) => inputs.name);
+        //불필요한 데이터 제거한 새로운 정렬만들기
+
+        //확인해보기
+        console.log(
+            " name으로 접근하기 : ", memberfm.nm,
+            typeof memberfm.elements,
+            " 노드리스트  정렬아님 : ", memberfm.elements,
+            " 정렬인가요???", Array.isArray(memberfm.elements),
+            myformArr, myformNmArr
+        )
+
+
+        document.querySelectorAll('[name="memberfm"] [name]').forEach((input) => {
+            input.addEventListener("focus", inputfocus);
+            input.addEventListener("blur", inputoutfocus);
+        });
+
+        function inputfocus() {
+            const newcls = this.value == "" ? " fc " : "";
+            this.parentNode.classList = "inputdiv " + newcls
+        }
+        function inputoutfocus() {
+            const noticecls = this.value == "" ? " notice " : "";
+            this.parentNode.classList = "inputdiv " + noticecls;
+        }
+
+        function onsubmits() {
+
+            if (memberfm.nm.value === "") {
+                alert("입력해");
+                return false;
+            } else {
+                alert(memberfm.nm.value);
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>
